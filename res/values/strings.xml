@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Swedish Place Names</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="button_sort">Sort</string>
+    <string name="text_search_bar"></string>
+    <string name="text_left">Entry one\nEntry two\nEntry three</string>
+    <string name="text_right">Entry one\'s pair\nEntry two\'s pair\nEntry three\'s pair</string>
+    <string name="button_english">English</string>
+    <string name="button_swedish">Swedish</string>
+    <string name="button_help">Help</string>
+    <string name="search">Search</string>
+    <string name="entry_one">Entry one</string>
+    <string name="entry_two">Entry two</string>
+    <string name="entry_three">Entry three</string>
+    <string name="entry_five">Entry five</string>
+    <string name="entry_four">Entry four</string>
+    <string name="entry_one_pair">Entry one pair</string>
+    <string name="entry_two_pair">Entry two pair</string>
+    <string name="entry_three_pair">Entry three pair</string>
+    <string name="entry_five_pair">Entry five pair</string>
+    <string name="entry_four_pair">Entry four pair</string>
+
+</resources>

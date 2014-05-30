@@ -1,0 +1,83 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fadeScrollbars="false"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:scrollbarFadeDuration="0"
+    tools:context="com.example.swedishplacenames.MainActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <Button
+            android:id="@+id/button_sort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/button_swedish"
+            android:text="@string/button_sort"
+            android:clickable="true"/>
+
+        <Button
+            android:id="@+id/button_english"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/button_english" 
+            android:clickable="true" />
+
+        <Button
+            android:id="@+id/button_swedish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/button_english"
+            android:text="@string/button_swedish"
+            android:clickable="true" />
+
+        <Button
+            android:id="@+id/button_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="@string/button_help"
+            android:clickable="true" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/button_sort"
+            android:layout_alignBottom="@+id/button_sort"
+            android:layout_alignParentRight="true"
+            android:ems="10"
+            android:gravity="left|center_vertical"
+            android:hint="@string/search"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="@string/text_search_bar" >
+        </AutoCompleteTextView>
+
+        <ListView
+            android:id="@+id/mylist"
+            android:layout_width="wrap_content"
+            android:layout_height="350dp"
+            android:layout_above="@+id/button_english"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/button_sort"
+            android:scrollbars="vertical"
+           	android:scrollbarDefaultDelayBeforeFade="0"
+            >
+
+        </ListView>
+
+    </RelativeLayout>
+
+</FrameLayout>
