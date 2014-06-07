@@ -243,7 +243,6 @@ int id action_mode_close_button 0x7f050024
 int id action_settings 0x7f050045
 int id activity_chooser_view_content 0x7f050025
 int id always 0x7f05000b
-int id autoCompleteTextView1 0x7f050040
 int id beginning 0x7f050011
 int id button_help 0x7f05003f
 int id button_language 0x7f05003e
@@ -294,6 +293,7 @@ int id showTitle 0x7f050006
 int id split_action_bar 0x7f05001e
 int id submit_area 0x7f050039
 int id tabMode 0x7f050002
+int id text_search_bar 0x7f050040
 int id title 0x7f05002b
 int id top_action_bar 0x7f050020
 int id up 0x7f050021

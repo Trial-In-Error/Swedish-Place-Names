@@ -3,11 +3,15 @@ package com.example.swedishplacenames;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -27,6 +32,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	private Button buttonLanguage;
 	private Button buttonSort;
 	private Button buttonHelp;
+	private AutoCompleteTextView searchBar;
 	private boolean isAscending = true;
 	private boolean isSwedish = false; // make this configurable? save across
 										// quits?
@@ -42,7 +48,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-		
+		/*
 		// populate the data fields with dummy data
 		data.clear();
 		for (int i = 0; i < 50; i++) {
@@ -51,22 +57,51 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 			//Log.d(TAG, "English word " + String.valueOf(i + 1)
 			//		+ ", Swedish word " + String.valueOf(i + 1));
 		}
-		
+		*/
+		reWriteData();
 		FillTable();
-		//buttonEnglish = (Button) findViewById(R.id.button_language);
 		buttonLanguage = (Button) findViewById(R.id.button_language);
 		buttonSort = (Button) findViewById(R.id.button_sort);
 		buttonHelp = (Button) findViewById(R.id.button_help);
-
-		//buttonEnglish.setOnClickListener(this);
+		searchBar = (AutoCompleteTextView) findViewById(R.id.text_search_bar);
+		
 		buttonLanguage.setOnClickListener(this);
 		buttonSort.setOnClickListener(this);
 		buttonHelp.setOnClickListener(this);
+		searchBar.addTextChangedListener(new TextWatcher(){
+			@Override
+		    public void afterTextChanged(Editable s) {
+		    	search(String.valueOf(searchBar.getText()));
+		    }
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				// TODO Auto-generated method stub
+				
+			}
+		}); 
 		
 		if(isSwedish){
 			buttonLanguage.setText("English");
 		} else {
 			buttonLanguage.setText("Swedish");
+		}
+	}
+	
+	private void reWriteData(){
+		// populate the data fields with dummy data
+		data.clear();
+		for (int i = 0; i < 50; i++) {
+			data.put("English word " + String.valueOf(i + 1), "Swedish word "
+					+ String.valueOf(i + 1));
 		}
 	}
 
@@ -177,6 +212,17 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		this.isAscending = !this.isAscending;
 		FillTable();
 		Log.d(TAG, "Are we now sorting ascending? " + isAscending);
+	}
+	
+	private void search(String query){
+		reWriteData();
+		for (Iterator<String> iterator = data.keySet().iterator(); iterator.hasNext();){
+			String key = iterator.next();
+			if(!key.toLowerCase().contains(query)){
+				iterator.remove();
+			}
+		}
+		FillTable();
 	}
 
 	private void Help() {

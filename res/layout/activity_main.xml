@@ -41,7 +41,7 @@
             android:clickable="true" />
 
         <AutoCompleteTextView
-            android:id="@+id/autoCompleteTextView1"
+            android:id="@+id/text_search_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/button_sort"
@@ -50,9 +50,11 @@
             android:ems="10"
             android:gravity="left|center_vertical"
             android:hint="@string/search"
+            android:imeOptions="actionDone"
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:text="@string/text_search_bar" >
+
         </AutoCompleteTextView>
 
         <ListView
