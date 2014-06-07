@@ -19,27 +19,17 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/button_swedish"
-            android:text="@string/button_sort"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:text="@string/button_sort" />
 
         <Button
-            android:id="@+id/button_english"
+            android:id="@+id/button_language"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:text="@string/button_english" 
-            android:clickable="true" />
-
-        <Button
-            android:id="@+id/button_swedish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/button_english"
-            android:text="@string/button_swedish"
-            android:clickable="true" />
+            android:clickable="true"
+            android:text="@string/button_english" />
 
         <Button
             android:id="@+id/button_help"
@@ -69,7 +59,7 @@
             android:id="@+id/mylist"
             android:layout_width="wrap_content"
             android:layout_height="350dp"
-            android:layout_above="@+id/button_english"
+            android:layout_above="@+id/button_language"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/button_sort"
             android:scrollbars="vertical"

@@ -1,10 +1,11 @@
 package com.example.swedishplacenames;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-
+import java.util.Map.Entry;
+import java.util.TreeMap;
 import android.support.v7.app.ActionBarActivity;
-//import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +16,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-//import android.os.Build;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -23,12 +23,15 @@ import com.example.swedishplacenames.R;
 
 public class MainActivity extends ActionBarActivity implements OnClickListener {
 	private static final String TAG = "MainActivity";
-	private Button buttonEnglish;
-	private Button buttonSwedish;
+	//private Button buttonEnglish;
+	private Button buttonLanguage;
 	private Button buttonSort;
 	private Button buttonHelp;
 	private boolean isAscending = true;
-	private boolean isSwedish = false; //make this configurable? save across quits?
+	private boolean isSwedish = false; // make this configurable? save across
+										// quits?
+	private int colCount = 2;
+	private TreeMap<String, String> data = new TreeMap<String, String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,16 +42,32 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		
+		// populate the data fields with dummy data
+		data.clear();
+		for (int i = 0; i < 50; i++) {
+			data.put("English word " + String.valueOf(i + 1), "Swedish word "
+					+ String.valueOf(i + 1));
+			//Log.d(TAG, "English word " + String.valueOf(i + 1)
+			//		+ ", Swedish word " + String.valueOf(i + 1));
+		}
+		
 		FillTable();
-		buttonEnglish = (Button) findViewById(R.id.button_english);
-		buttonSwedish = (Button) findViewById(R.id.button_swedish);
+		//buttonEnglish = (Button) findViewById(R.id.button_language);
+		buttonLanguage = (Button) findViewById(R.id.button_language);
 		buttonSort = (Button) findViewById(R.id.button_sort);
 		buttonHelp = (Button) findViewById(R.id.button_help);
-		
-		buttonEnglish.setOnClickListener(this);
-		buttonSwedish.setOnClickListener(this);
+
+		//buttonEnglish.setOnClickListener(this);
+		buttonLanguage.setOnClickListener(this);
 		buttonSort.setOnClickListener(this);
 		buttonHelp.setOnClickListener(this);
+		
+		if(isSwedish){
+			buttonLanguage.setText("English");
+		} else {
+			buttonLanguage.setText("Swedish");
+		}
 	}
 
 	@Override
@@ -89,26 +108,34 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	}
 
 	private void FillTable() {
-		//setContentView(R.layout.activity_main);
-
 		ListView list = (ListView) findViewById(R.id.mylist);
 		ArrayList<HashMap<String, String>> mylistData = new ArrayList<HashMap<String, String>>();
 
-		String[] columnTags = new String[] { "col1", "col2", "col3" };
+		String[] columnTags = new String[colCount];
+		for (int i = 0; i < colCount; i++) {
+			columnTags[i] = "col" + String.valueOf(i);
+		}
 
-		int[] columnIds = new int[] { R.id.column1, R.id.column2, R.id.column3 };
-		for (int i = 0; i < 50; i++) {
-			HashMap<String, String> map = new HashMap<String, String>();
-			// initialize row data
-			for (int j = 0; j < 3; j++) {
-				if(this.isAscending){
-					map.put(columnTags[j], "row " + i + ", col " + j);
-				}else{
-					map.put(columnTags[j], "row "+ (50 - i) + ", col " + j);
-				}
+		// build the sorted list
+		int[] columnIds = new int[] { R.id.column1, R.id.column2 };
+		ArrayList<String> temp = new ArrayList<String>();
+		for (String key : data.keySet()) {
+			temp.add(key);
+			//Log.d(TAG, "Added " + key + " to temp.");
+			if (!this.isAscending) {
+				Collections.reverse(temp);
 			}
+		}
+
+		// build the table from the list
+		for (String key : temp) {
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put(columnTags[0], key);
+			map.put(columnTags[1], data.get(key));
 			mylistData.add(map);
 		}
+
+		// load the table
 		SimpleAdapter arrayAdapter = new SimpleAdapter(this, mylistData,
 				R.layout.mylistrow, columnTags, columnIds);
 		list.setAdapter(arrayAdapter);
@@ -116,16 +143,13 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 	@Override
 	public void onClick(View view) {
-		Log.d(TAG, "View "+view.getId()+" was touched. Sort is "+R.id.button_sort+".");
+		Log.d(TAG, "View " + view.getId() + " was touched.");
 		switch (view.getId()) {
 		case R.id.button_sort:
 			Sort();
 			break;
-		case R.id.button_english:
-			ToEnglish();
-			break;
-		case R.id.button_swedish:
-			ToSwedish();
+		case R.id.button_language:
+			changeLanguages();
 			break;
 		case R.id.button_help:
 			Help();
@@ -133,19 +157,30 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		}
 	}
 
+	private void changeLanguages() {
+		Log.d(TAG, "Change languages button touched.");
+		if(isSwedish)
+		{
+			buttonLanguage.setText("Swedish");
+		}else {
+			buttonLanguage.setText("English");
+		}
+		isSwedish = !isSwedish;
+		TreeMap<String, String> revised = new TreeMap<String, String>();
+		for (Entry<String, String> entry : data.entrySet())
+			revised.put(entry.getValue(), entry.getKey());
+		data = (TreeMap<String, String>) revised.clone();
+		FillTable();
+	}
+
 	private void Sort() {
 		this.isAscending = !this.isAscending;
 		FillTable();
-		Log.d(TAG, "Are we now sorting ascending? "+isAscending);
-	}
-
-	private void ToEnglish() {
-	}
-
-	private void ToSwedish() {
+		Log.d(TAG, "Are we now sorting ascending? " + isAscending);
 	}
 
 	private void Help() {
+		Log.d(TAG, "Help button touched.");
 	}
 
 }
